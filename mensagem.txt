@@ -1,0 +1,2 @@
+Criei apenas o diretório, 
+lembre sempre antes de escrever o código dê um git pull e depois que terminar dê git push.
