@@ -2,7 +2,8 @@
 #include <stdlib.h>
 // #include <windows.h>
 #include <time.h>
-:
+
+
 //Macros para os movimentos (mov)
 #define EMFRENTE 1
 #define ALEAT 2
@@ -40,7 +41,7 @@
     #define LIMPATELA() system("clear")
 #endif
 //////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////Inicio dos prototipos ou definições /////////////////////////
+/////////////////////////////////Inicio dos prototipos ou definiï¿½ï¿½es /////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 void preencheMatriz(...);//completar com os parametros sendo passados
@@ -48,13 +49,14 @@ int escolheMovimento(...);//completar com os parametros sendo passados
 int defineDirecao(...);//completar com os parametros sendo passados
 void movimentaOnibus(...); //completar com os parametros sendo passados
 void imprimeMapa(...); //completar com os parametros sendo passados
-//incluir os outros protótipos necessários
+//incluir os outros protï¿½tipos necessï¿½rios
 
 int main()
 {
 
-   // atenção utilizar as macros definidas no início do programa
+   // atenï¿½ï¿½o utilizar as macros definidas no inï¿½cio do programa
    char mat[MAXL][MAXC];
+
 
    int nL=20,nC=20,nCiclos=50; //ou fornecidos pelo usuario
    int mov; //opcao fornecida pelo usuario para o tipo de movimento
@@ -68,6 +70,14 @@ int main()
 void preencheMatriz(char matriz[MAXL][MAXC])
 {
     char a[20][20];
+
+    for(int i = 0; i < 20; i++)
+    {
+        for (int j = 0; j < 20; j++)
+        {
+            a[i][j] = '.';
+        }
+    }
 
     a[0][0] = 'P';
     a[0][2] = 'P';
@@ -96,14 +106,6 @@ void preencheMatriz(char matriz[MAXL][MAXC])
     a[19][19] = 'B';
 
 
-    for(int i = 0; i < 20; i++)
-    {
-        for (int j = 0; j < 20; j++)
-        {
-            if(a[i][j] != 'P' && a[i][j] != '#' && a[i][j] != 'B')
-                a[i][j] = '.';
-        }
-    }
 
 }
 
@@ -133,25 +135,25 @@ int escolheMovimento(int mov)
 
 }
 int defineDirecao(...){
-  //implementar os comandos necessários
+  //implementar os comandos necessï¿½rios
 
 }
 
 void movimentaOnibus(...){
 
-    //incluir o laço de repetição e completar o que for necessário para o movimento do ônibus
+    //incluir o laï¿½o de repetiï¿½ï¿½o e completar o que for necessï¿½rio para o movimento do ï¿½nibus
 
 
-        //incluir os comandos ou funções para atualizar o mapa com o movimento do ônibus
+        //incluir os comandos ou funï¿½ï¿½es para atualizar o mapa com o movimento do ï¿½nibus
 
         imprimeMapa(...);
-        DORME(...); //definir o tempo que segura a tela no vídeo
+        DORME(...); //definir o tempo que segura a tela no vï¿½deo
         LIMPATELA();
 
 
 
-     //fim do laço
+     //fim do laï¿½oo
 
 
 }
-// incluir aqui as definições das outras funções necessárias
+// incluir aqui as definiï¿½ï¿½es das outras funï¿½ï¿½es necessï¿½rias
