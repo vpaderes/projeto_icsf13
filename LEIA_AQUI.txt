@@ -1,0 +1,30 @@
+Prossegui fazendo um pequeno progresso no projeto. 
+
+Agora cada função tem seu próprio arquivo .c lembre de incluí-los quando for tentar compilar pelo terminal, pois se não, não funcionará.
+Basta usar os comandos abaixos que roda tranquilo:
+
+Para COMPILAR E VER OS ERROS EM COR (lembre que tem que estar no diretório do projeto):
+
+gcc -fdiagnostics-color=always -g *.c -o Projeto_final
+
+Para COMPILAR E RODAR JUNTO:
+
+gcc *.c -o Projeto_final && ./Projeto_final
+
+
+COMO CRIAR NOVAS FUNÇÕES?:
+
+Basta criar um novo arquivo.c e escrever o código da função normalmente lembrando de incluir no início os headers:
+
+#include <stdio.h>
+#include "defines_projeto.h"
+#include "prototipos_projeto.h"
+
+e qualquer outro header que for precisar
+
+
+
+ATENÇÃO:
+
+Se for criar algum arquivo de rascunho, crie com a extensão .txt - não mais com .c-, se não o compilador vai tentar compilar e rodar como um programa e vai dar erro!
+Por isso mudei o teste.c e Projeto.c para texte.txt e Projeto.txt
