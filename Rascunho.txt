@@ -1,127 +1,32 @@
+    if(opcao == 1){
 
-void preencheMatriz(char matriz[MAXL][MAXC], int nL, int nC, int* onibus)
-{
+        for (int j=nC-1; j>=0; j--){
+            for(int i=nL-1; i>=0; i--){
+                ciclos++;
+                if (matriz[i][j] == P){ //Verifica se é passageiro
 
-    for(int i = 0; i < MAXL; i++)
-    {
-        for (int j = 0; j < MAXC; j++)
-        {
-            matriz[i][j] = V;
-        }
-    }
+                    *passageiros=*passageiros+1;
+                    printf("\n\nPassageiros: %d\n\n", *passageiros);
 
-    matriz[0][0] = 'P';
-    matriz[0][2] = 'P';
-    matriz[1][2] = '#';
-    matriz[1][3] = '#';
-    matriz[1][4] = '#';
-    matriz[2][1] = 'P';
-    matriz[2][11] = 'P';
-    matriz[2][16] = '#';
-    matriz[4][6] = 'P';
-    matriz[6][6] = 'P';
-    matriz[6][19] = 'P';
-    matriz[11][3] = 'P';
-    matriz[11][11] = 'P';
-    matriz[12][19] = 'P';
-    matriz[13][7] = '#';
-    matriz[14][7] = '#';
-    matriz[14][14] = 'P';
-    matriz[15][7] = '#';
-    matriz[16][3] = 'P';
-    matriz[16][16] = 'P';
-    matriz[16][19] = 'P';
-    matriz[19][1] = 'P';
-    matriz[19][6] = 'P';
-    matriz[19][10] = 'P';
-    matriz[19][19] = 'B';
+                }
+                if (matriz[i+1][j]== B) matriz[i+1][j] = V; // Muda a célula anterior da posição do onibus para vazio
+                if (matriz[i][j] != '#') matriz[i][j] = B; // Verifica se for obstáculo, só move o ônibus se não for
+                imprimeMapa(matriz, nL, nC);
 
-    for (int i=0; i<nL; i++){
-        for(int j=0; j<nC; j++){
-            if (matriz[i][j] == B) {
-                onibus[0] = i;
-                onibus[1] = j;
+                if (i==0 && j==0) { //Este código joga o ônibus para a outra extremidade do mapa, para caso ele chegue no final e ainda tenha passageiro para pegar na parte que ele não rodou
+                    i = nL-1;
+                    j = nC-1;
+                    matriz[0][0] = V; // Muda a célula anterior da posição do onibus para vazio quando chega na última linha                    
+                }
+                if (ciclos==nL*nC){ //Verifica se o ônibus chegou na posição inicial do mapa - se já rodou tudo - e ativa uma flag para sair do loop
+                    flag_para_looping = 1;
+                }
             }
+            if (matriz[0][j]== B) matriz[0][j] = V;
+            
+            if (flag_para_looping == 1) { // Muda o j para a condição de saída do loop depois de todos os usos dele, de modo que não bagunça a matriz
+                j=-1;
+            } 
         }
+        printf("\n\nPassageiros: %d\n\n", *passageiros);
     }
-
-}
-
-void imprimeMapa(char matriz[MAXL][MAXC], int nL, int nC) {
-
-    printf("\n\n\n");
-    for (int i=0; i<nL; i++){
-        for (int j=0; j<nC; j++){
-            printf("%c ", matriz[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n\n\n");
-
-}
-
-int escolheMovimento(){
-    int opcao = 0;
-
-    while (opcao<1 || opcao>4){
-    
-        printf("\nMenu de Movimentações\nDigite sua opcao:\n");
-        printf("Em Frente: 1\n");
-        printf("Movimento aleatorio: 2\n");
-        printf("Busca Inteligente: 3\n");
-        printf("Mix: 4\n\n");
-        scanf("%d", &opcao);
-        
-        if(opcao<1 && opcao>4) printf("Opcao invalida! Digite novamente:\n");
-    }
-
-
-return opcao;}
-
-void movimentaOnibus(char matriz[MAXL][MAXC], int mov, int nL, int nC, int* onibus, int *passageiros) {
-
-    // o "if" abaixo verifica o tipo de movimento
-    if (mov == 1) {
-        int opcao = 0;
-        printf("\nSeguindo em frente\n"); // Está decidido que vamos seguir em frente, o menu abaixo capta a opção de direção, se é N S L O, etc
-
-        printf("Digite a direção do onibus:\n");
-        printf("(1)N  (2)S  (3)L  (4)O\n(5)NE  (6)NO  (7)SE  (8)SO\n\n");
-        scanf("%d", &opcao);
-
-        // O "while" verifica se a entrada do usuário foi feita com valores válidos
-        while(opcao<1 || opcao>8) {
-            if(opcao<1||opcao>8) {
-                printf("Opcao invalida! Digite novamente:\n");
-                printf("(1)N  (2)S  (3)L  (4)O\n(5)NE  (6)NO  (7)SE  (8)SO\n\n");
-                scanf("%d", &opcao);
-            }
-        }
-
-        // Após a verificação de entrada válida, chamamos a função do movimento específico
-        emFrente(matriz, opcao, nL, nC, onibus, passageiros);
-
-    }
-}
-
-void emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, int *passageiros){
-
-
-    // Controlo as direções do onibus pelos laços "for", de maneira que sempre usamos a matriz no modo "matriz[linhas][colunas]" para facilitar o entendimento e edição
-    // As linhas sempre serão controladas por [i] e as colunas sempre serão controladas por [j]
-    for (int j=onibus[1]; j>=0; j--){
-        for(int i=onibus[0]; i>=0; i--){
-            if (matriz[i][j] == P){ //Verifica se é passageiro
-
-                *passageiros=*passageiros+1;
-                printf("\n\nPassageiros: %d\n\n", *passageiros);
-
-            }
-            if (matriz[i+1][j]== B) matriz[i+1][j] = V; // Muda a célula anterior da posição do onibus para vazio
-            if (matriz[i][j] != '#') matriz[i][j] = B; // Verifica se for obstáculo, só move o ônibus se não for
-            imprimeMapa(matriz, nL, nC);
-        }
-        if (matriz[0][j]== B) matriz[0][j] = V; // Muda a célula anterior da posição do onibus para vazio quando chega na última linha
-    }
-
-}

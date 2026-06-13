@@ -39,8 +39,9 @@ void preencheMatriz(char matriz[MAXL][MAXC], int nL, int nC, int* onibus)
     matriz[19][1] = 'P';
     matriz[19][6] = 'P';
     matriz[19][10] = 'P';
-    matriz[19][19] = 'B';
+    matriz[nL-1][nC-1] = 'B';
 
+    //loop abaixo analisa o mapa da matriz e marca no vetor onibus as posições iniciais de linha e coluna do busão
     for (int i=0; i<nL; i++){
         for(int j=0; j<nC; j++){
             if (matriz[i][j] == B) {
