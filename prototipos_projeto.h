@@ -7,6 +7,7 @@
 
 
 void preencheMatriz(char matriz[MAXL][MAXC], int nL, int nC, int* onibus);
+int *testeVizinhos(char matriz[MAXL][MAXC], int nL, int nC, int* onibus);
 int escolheMovimento();
 int defineDirecao();
 void movimentaOnibus(char matriz[MAXL][MAXC], int mov, int nL, int nC, int* onibus, int *passageiros); 

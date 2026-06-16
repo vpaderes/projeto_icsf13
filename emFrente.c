@@ -6,7 +6,7 @@
 // a opcao aqui é definida no menu de tipo de movimento e significa a direção N S L O, etc
 void emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, int *passageiros){
 
-    int ciclos = 0, diagonal = 0;
+    int ciclos = 0, posicao_livre = 1;
 
     // Controlo as direções do onibus pelos "if" dentro do laço, de maneira que o onibus andará no máximo uma vez por casa, controlando com a variável "ciclos"
     // As linhas sempre serão controladas por [l] e as colunas sempre serão controladas por [c]
@@ -15,13 +15,14 @@ void emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, i
     while(ciclos <nL*nC){
 
         ciclos++;
-        if (matriz[l][c] == P){ //Verifica se é passageiro
+        
+        if (matriz[l][c] != '#') {
+            if (matriz[l][c] == P){ //Verifica se é passageiro
 
             *passageiros=*passageiros+1;
             printf("\n\nPassageiros: %d\n\n", *passageiros);
 
-        }
-        if (matriz[l][c] != '#') {
+            }
             matriz[l][c] = B; // Verifica se for obstáculo, só move o ônibus se não for
             matriz[onibus[0]][onibus[1]] = V; // limpa a célula da posição anterior  para vazio
             onibus[0]=l; // Muda a célula da posição do onibus
@@ -70,17 +71,6 @@ void emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, i
             c--;
             if(c==0){
                 c=nC-1;
-                l++;
-                if(l==nL){
-                    l=0;
-                }
-            }
-        }
-        if(opcao == 5){// NORDESTE ???
-            c++;
-            l--;
-            if(c==nC){
-                c=0;
                 l++;
                 if(l==nL){
                     l=0;
