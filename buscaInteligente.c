@@ -8,7 +8,11 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
     int c_onibus = onibus[1];
     int alvo_l = -1, alvo_c = -1;
     int encontrou = 0;
+    int aux = ciclos;
+    
 
+    while(ciclos > 0)
+    {
     // 1. Busca pelo passageiro em um raio de 1 até 3
     for (int raio = 1; raio <= 3 && !encontrou; raio++) {
         for (int i = l_onibus - raio; i <= l_onibus + raio && !encontrou; i++) {
@@ -61,7 +65,6 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
         }
 
         // 4. Executa o movimento
-        ciclos++;
         int l_antigo = onibus[0];
         int c_antigo = onibus[1];
 
@@ -79,7 +82,12 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
         
         imprimeMapa(matriz, nL, nC);
     }
+        ciclos--;
+    }
+    
+
 
     printf("\n\nPassageiros totais: %d\n", *passageiros);
-    printf("Ciclos percorridos: %d\n\n", ciclos);
+    printf("Ciclos percorridos: %d\n\n", aux);
 }
+
