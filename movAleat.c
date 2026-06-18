@@ -7,7 +7,7 @@
 // Adicionado nCiclos como parâmetro, já que era usado na função original
 void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int nCiclos)
 {
-    do
+    while(nCiclos > 0)
     {
         // 1. Sorteia a direção a CADA passo
         int direcao = rand() % 8 + 1; 
@@ -53,6 +53,6 @@ void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passage
         
         nCiclos--;
         imprimeMapa(matriz, nL, nC);
-        
-    } while(nCiclos > 0);
+    }
+        printf("Passageiros totais: %d\n", *passageiros);        
 }

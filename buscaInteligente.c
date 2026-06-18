@@ -3,11 +3,7 @@
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
 
-// Assuma que este é o protótipo da função que você criou.
-// Altere "obterCasaVazia" para o nome real da sua função no seu projeto.
-int* obterCasaVazia(char matriz[MAXL][MAXC], int nL, int nC, int onibus[2]);
-
-void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros) {
+void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos) {
     int l_onibus = onibus[0];
     int c_onibus = onibus[1];
     int alvo_l = -1, alvo_c = -1;
@@ -32,11 +28,9 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
     }
 
     // Se não encontrou passageiro no raio, encerra a função
-    if (!encontrou) {
+    if (encontrou == 0) {
         return; 
     }
-
-    int ciclos = 0;
 
     // 2. Loop de movimentação até a coordenada do passageiro
     while (onibus[0] != alvo_l || onibus[1] != alvo_c) {
@@ -53,15 +47,13 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
         // 3. Verifica colisão com limites da matriz ou obstáculos no caminho ideal
         if (proximo_l < 0 || proximo_l >= nL || proximo_c < 0 || proximo_c >= nC || matriz[proximo_l][proximo_c] == '#') {
             
-            // Invoca a função que você criou para buscar alternativa livre
-            int* casa_livre = obterCasaVazia(matriz, nL, nC, onibus);
+            // Invoca a função criada para buscar alternativa livre
+            int* casa_livre = testeVizinhos(matriz, nL, nC, onibus);
             
             if (casa_livre != NULL) {
                 proximo_l = casa_livre[0];
                 proximo_c = casa_livre[1];
                 
-                // Se a sua função aloca o vetor com malloc, você deve liberar a memória aqui:
-                // free(casa_livre); 
             } else {
                 // Preso completamente: obstáculo à frente e nenhuma casa vazia ao redor
                 break; 

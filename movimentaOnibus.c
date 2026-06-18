@@ -7,6 +7,10 @@ void movimentaOnibus(char matriz[MAXL][MAXC], int mov, int nL, int nC, int* onib
     int opcao = 0;
     int nCiclos = 0;
 
+    
+    printf("Digite a quantidade de ciclos para o movimento: ");
+    scanf("%d", &nCiclos); // Captura nCiclos localmente para satisfazer o parâmetro
+    
     switch (mov) {
         case EMFRENTE:
             printf("\nSeguindo em frente\n");
@@ -33,16 +37,13 @@ void movimentaOnibus(char matriz[MAXL][MAXC], int mov, int nL, int nC, int* onib
             break;
 
         case ALEAT:
-            printf("\nMovimento Aleatorio selecionado.\n");
-            printf("Digite a quantidade de ciclos para o movimento: ");
-            scanf("%d", &nCiclos); // Captura nCiclos localmente para satisfazer o parâmetro
-            
+            printf("\nMovimento Aleatorio selecionado.\n"); 
             movAleat(matriz, nL, nC, onibus, passageiros, nCiclos);
             break;
 
         case BUSCINTEL:
             printf("\nBusca Inteligente selecionada.\n");
-            buscaInteligente(matriz, nL, nC, onibus, passageiros);
+            buscaInteligente(matriz, nL, nC, onibus, passageiros, nCiclos);
             break;
 
         case MIX:

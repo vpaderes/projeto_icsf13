@@ -14,6 +14,6 @@ void emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, i
 
 // Adições necessárias para a integração no movimentaOnibus.c
 void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int nCiclos);
-void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros);
+void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos);
 
 #endif

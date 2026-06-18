@@ -6,6 +6,7 @@
 int *testeVizinhos(char matriz[MAXL][MAXC], int nL, int nC, int* onibus){
 
     int posicao_livre[2]= {-1,-1}, flag_sai_do_loop =0;
+    int* posicao = &posicao_livre[0];
 
     for (int l = onibus[0]-1; l<onibus[0]+2 && l<nL; l++){
         if (l<0) l=0;
@@ -40,4 +41,5 @@ int *testeVizinhos(char matriz[MAXL][MAXC], int nL, int nC, int* onibus){
     exit(1);
     }
 
-return posicao_livre;}
+return posicao;
+}
