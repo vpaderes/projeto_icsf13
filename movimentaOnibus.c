@@ -4,6 +4,7 @@
 
 void movimentaOnibus(char matriz[MAXL][MAXC], int mov, int nL, int nC, int* onibus, int *passageiros) {
 
+    int flag_obstaculo = 0;
     // o "if" abaixo verifica o tipo de movimento
     if (mov == 1) {
         int opcao = 0;
@@ -23,7 +24,15 @@ void movimentaOnibus(char matriz[MAXL][MAXC], int mov, int nL, int nC, int* onib
         }
 
         // Após a verificação de entrada válida, chamamos a função do movimento específico
-        emFrente(matriz, opcao, nL, nC, onibus, passageiros);
+        emFrente(matriz, opcao, nL, nC, onibus, passageiros, &flag_obstaculo);
+        while (flag_obstaculo ==1)
+        {
+            printf("Encontramos um obstaculo! Digite nova direcao:\n");
+            printf("(1)N  (2)S  (3)L  (4)O\n(5)NE  (6)NO  (7)SE  (8)SO\n\n");
+            scanf("%d", &opcao);
+            emFrente(matriz, opcao, nL, nC, onibus, passageiros, &flag_obstaculo);
+        }
+        
 
     }
 }
