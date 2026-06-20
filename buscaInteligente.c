@@ -4,91 +4,94 @@
 #include "prototipos_projeto.h"
 
 void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos) {
-    int l_onibus = onibus[0];
-    int c_onibus = onibus[1];
+    int l_onibus;
+    int c_onibus;
     int alvo_l = -1, alvo_c = -1;
     int encontrou = 0;
-    int aux = ciclos;
+    int contagem = 0;
     
 
-    while(ciclos >= 0) {
+    while(contagem <ciclos) {
+        l_onibus = onibus[0];
+        c_onibus = onibus[1];
         encontrou = 0;
-        // 1. Busca pelo passageiro em um raio de 1 até 3
+        // Os loops abaixo buscam pelo passageiro em um raio de 1 até 3
         for (int raio = 1; raio <= 3 && encontrou!=1; raio++) {
-            for (int i = l_onibus - raio; i <= l_onibus + raio && encontrou !=1; i++) {
-                for (int j = c_onibus - raio; j <= c_onibus + raio && encontrou !=1; j++) {
+            for (int i = l_onibus - raio; i <= l_onibus + raio && encontrou !=1; i++) { //Testa cada uma das linhas de l_onibus - 3  até l_onibus + 3 
+                for (int j = c_onibus - raio; j <= c_onibus + raio && encontrou !=1; j++) { //Testa cada uma das colunas de c_onibus - 3  até c_onibus + 3 
                     
-                    if (i < 0 || i >= nL || j < 0 || j >= nC) continue;
+                    if (i < 0 || i >= nL || j < 0 || j >= nC) continue; //Não vefifica além das bordas
 
                     if (abs(i - l_onibus) == raio || abs(j - c_onibus) == raio) {
                         if (matriz[i][j] == P) {
                             alvo_l = i;
                             alvo_c = j;
-                            encontrou = 1;
+                            encontrou = 1; //Muda a flag "encontrou" para a condição de parada.
                         }
                     }
                 }
             }
         }
 
-        // Se não encontrou passageiro no raio, encerra a função
-        if (encontrou == 0) {
+        
+        if (encontrou == 0) { //Se não encontrou passageiros, chama a função move aleatório com 1 ciclo e conta um ciclo a menos
 
-            movAleat(matriz, nL, nC, onibus, passageiros, ciclos);
-        }
+            movAleat(matriz, nL, nC, onibus, passageiros, 1);
+            contagem++;
+            continue;; // sai desse loop.
+        } else {
 
-        // 2. Loop de movimentação até a coordenada do passageiro
-        while (onibus[0] != alvo_l || onibus[1] != alvo_c) {
-            int proximo_l = onibus[0];
-            int proximo_c = onibus[1];
+            // Caso encontrar um passageiro, executa o código abaixo:
+            while ((onibus[0] != alvo_l || onibus[1] != alvo_c) && contagem<ciclos) {
+                //Cria inicializa para calcular e checar qual é o proximo passo
+                int proximo_l = onibus[0];
+                int proximo_c = onibus[1];
 
-            // Determina o próximo passo ideal (reduz a distância em linha e coluna)
-            if (alvo_l < onibus[0]) proximo_l--;
-            else if (alvo_l > onibus[0]) proximo_l++;
+                // Os if-else abaixo movem as variáveis de próximo passo
+                if (alvo_l < onibus[0]) proximo_l--; //Norte
+                else if (alvo_l > onibus[0]) proximo_l++;//Sul
+                if (alvo_c < onibus[1]) proximo_c--;//Oeste
+                else if (alvo_c > onibus[1]) proximo_c++;//Leste
 
-            if (alvo_c < onibus[1]) proximo_c--;
-            else if (alvo_c > onibus[1]) proximo_c++;
-
-            // 3. Verifica colisão com limites da matriz ou obstáculos no caminho ideal
-            if (proximo_l < 0 || proximo_l >= nL || proximo_c < 0 || proximo_c >= nC || matriz[proximo_l][proximo_c] == '#') {
-                
-                // Invoca a função criada para buscar alternativa livre
-                int* casa_livre = testeVizinhos(matriz, nL, nC, onibus);
-                
-                if (casa_livre != NULL) {
-                    proximo_l = casa_livre[0];
-                    proximo_c = casa_livre[1];
-                    free(casa_livre);
-                } else {
-                    // Preso completamente: obstáculo à frente e nenhuma casa vazia ao redor
-                    break; 
+                // O bloco abaixo verifica se as variáveis de próximo passo não vão bater em um obstáculo ou borda
+                if (proximo_l < 0 || proximo_l >= nL || proximo_c < 0 || proximo_c >= nC || matriz[proximo_l][proximo_c] == '#') {
+                    
+                    // Se não for uma casa livre, chama a função de testar vizinhos
+                    int* casa_livre = testeVizinhos(matriz, nL, nC, onibus);
+                    
+                    if (casa_livre[0] != -1 && casa_livre[1] != -1) { //Verifica se há alguma casa livre que a função retornou. Se nçao  houver, ela retorna -1
+                        proximo_l = casa_livre[0];
+                        proximo_c = casa_livre[1];
+                    } else {
+                        exit(1); 
+                    }
                 }
+
+                // Guarda os valores da ultima casa para limpar mais tarde.
+                int l_antigo = onibus[0];
+                int c_antigo = onibus[1];
+                //Move o onibus para a proxima casa
+                onibus[0] = proximo_l;
+                onibus[1] = proximo_c;
+
+                // Pega o passageiro, se for o caso
+                if (matriz[onibus[0]][onibus[1]] == P) { 
+                    (*passageiros)++;
+                }
+
+                //Move o onibus na matriz e limpa casa anterior
+                matriz[l_antigo][c_antigo] = V; 
+                matriz[onibus[0]][onibus[1]] = B; 
+                contagem++;
+                imprimeMapa(matriz, nL, nC);
             }
-
-            // 4. Executa o movimento
-            int l_antigo = onibus[0];
-            int c_antigo = onibus[1];
-
-            onibus[0] = proximo_l;
-            onibus[1] = proximo_c;
-
-            // Se o espaço para o qual andamos contém o passageiro
-            if (matriz[onibus[0]][onibus[1]] == P) { 
-                (*passageiros)++;
-            }
-
-            // Atualização visual e ponteiros na matriz
-            matriz[l_antigo][c_antigo] = V; 
-            matriz[onibus[0]][onibus[1]] = B; // B representa a posição atual do ônibus
             
-            imprimeMapa(matriz, nL, nC);
         }
-            ciclos--;
     }
     
 
 
     printf("\n\nPassageiros totais: %d\n", *passageiros);
-    printf("Ciclos percorridos: %d\n\n", aux);
+    printf("Ciclos percorridos: %d\n\n", ciclos);
 }
 
