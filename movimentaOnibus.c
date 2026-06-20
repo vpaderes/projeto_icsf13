@@ -2,14 +2,10 @@
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
 
-void movimentaOnibus(char matriz[MAXL][MAXC], int mov, int nL, int nC, int* onibus, int *passageiros) {
+void movimentaOnibus(char matriz[MAXL][MAXC], int mov, int nL, int nC, int* onibus, int *passageiros, int *ciclos) {
     int flag_obstaculo = 0;
     int opcao = 0;
-    int nCiclos = 0;
-
-    
-    printf("Digite a quantidade de ciclos para o movimento: ");
-    scanf("%d", &nCiclos); // Captura nCiclos localmente para satisfazer o parâmetro
+    int contagem = 0;
     
     switch (mov) {
         case EMFRENTE:
@@ -25,25 +21,28 @@ void movimentaOnibus(char matriz[MAXL][MAXC], int mov, int nL, int nC, int* onib
                 scanf("%d", &opcao);
             }
 
-            // Chamada da função do movimento
-            emFrente(matriz, opcao, nL, nC, onibus, passageiros, &flag_obstaculo);
+            // Chamada da função do movimento em frente
+            contagem = emFrente(matriz, opcao, nL, nC, onibus, passageiros, &flag_obstaculo, ciclos);
+            *ciclos-=contagem;
             
+            //A flag de obstáculo serve para prender o onibus nesse loop de movimento caso ele não consiga ir em frente
             while (flag_obstaculo == 1) {
+                *ciclos-=contagem;
                 printf("Encontramos um obstaculo! Digite nova direcao:\n");
                 printf("(1)N  (2)S  (3)L  (4)O\n(5)NE  (6)NO  (7)SE  (8)SO\n\n");
                 scanf("%d", &opcao);
-                emFrente(matriz, opcao, nL, nC, onibus, passageiros, &flag_obstaculo);
+                contagem = emFrente(matriz, opcao, nL, nC, onibus, passageiros, &flag_obstaculo, ciclos);
             }
             break;
 
         case ALEAT:
             printf("\nMovimento Aleatorio selecionado.\n"); 
-            movAleat(matriz, nL, nC, onibus, passageiros, nCiclos);
+            movAleat(matriz, nL, nC, onibus, passageiros, ciclos);
             break;
 
         case BUSCINTEL:
             printf("\nBusca Inteligente selecionada.\n");
-            buscaInteligente(matriz, nL, nC, onibus, passageiros, nCiclos);
+            buscaInteligente(matriz, nL, nC, onibus, passageiros, ciclos);
             break;
 
         case MIX:

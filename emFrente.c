@@ -5,18 +5,21 @@
 
 // opcao: 1 = NORTE, 2 = SUL, 3 = LESTE, 4 = OESTE
 // opcao: 5 = NORDESTE, 6 = SUDESTE, 7 = SUDOESTE, 8 = NOROESTE
-void emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, int *passageiros, int*flag_obstaculo) {
-    int ciclos = 0;
+int emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, int *passageiros, int*flag_obstaculo, int *ciclos) {
+    int contagem = 0;
     int l = onibus[0];
     int c = onibus[1];
+    int proximo_l = onibus[0];
+    int proximo_c = onibus[1];
 
     *flag_obstaculo = 0;
 
-    while (ciclos<nL*nC) {
-        int proximo_l = l;
-        int proximo_c = c;
+    while (contagem<*ciclos) {
 
-        // 1. Projeta a próxima posição
+        proximo_l = onibus[0];
+        proximo_c = onibus[1];
+
+        // Salva qual será a proxima posição
         if (opcao == 1) { // NORTE
             proximo_l--;
         } else if (opcao == 2) { // SUL
@@ -28,50 +31,48 @@ void emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, i
         } else if (opcao == 5) { // NORDESTE
             proximo_l--;
             proximo_c++;
-        } else if (opcao == 6) { // SUDESTE
+        } else if (opcao == 7) { // SUDESTE
             proximo_l++;
             proximo_c++;
-        } else if (opcao == 7) { // SUDOESTE
+        } else if (opcao == 8) { // SUDOESTE
             proximo_l++;
             proximo_c--;
-        } else if (opcao == 8) { // NOROESTE
+        } else if (opcao == 6) { // NOROESTE
             proximo_l--;
             proximo_c--;
         }
 
-        // 2. Verifica limites da matriz
+        // Verifica se é borda
         if (proximo_l < 0 || proximo_l >= nL || proximo_c < 0 || proximo_c >= nC) {
             *flag_obstaculo = 1;
             break; 
-        }
-
-        // 3. Verifica colisão com obstáculos
+        } // Verifica se é obstáculo
         if (matriz[proximo_l][proximo_c] == '#') {
             *flag_obstaculo = 1;
             break; 
         }
 
-        // 4. Executa o movimento
-        ciclos++;
+        // Se for livre, executa o movimento
+        contagem++;
         l = proximo_l;
         c = proximo_c;
 
-        if (matriz[l][c] == P) { 
+        if (matriz[l][c] == P) { // Pega passageiro
             (*passageiros)++;
         }
 
-        // Atualização visual e ponteiros
+        // Atualizao onibus na planilha
         matriz[onibus[0]][onibus[1]] = V; 
         matriz[l][c] = B;                 
         
-        onibus[0] = l;
+        onibus[0] = l; // salva o vetor do onibus em novas posições
         onibus[1] = c;
 
         imprimeMapa(matriz, nL, nC);
     }
 
     printf("\n\nPassageiros totais: %d\n", *passageiros);
-    
-    printf("Ciclos percorridos: %d\n\n", ciclos);
+    printf("Ciclos percorridos: %d\n\n", contagem);
 
-}
+    
+return contagem;}

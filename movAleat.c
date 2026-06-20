@@ -4,18 +4,18 @@
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
 
-// Adicionado nCiclos como parâmetro, já que era usado na função original
-void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int nCiclos)
+void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int *ciclos)
 {
-    while(nCiclos > 0)
+    int contagem = 0;
+    while(contagem<*ciclos)
     {
-        // 1. Sorteia a direção a CADA passo
+        //Sorteia o numero para a direção
         int direcao = rand() % 8 + 1; 
-        
+        //Cria variáveis para calcular e verificar a próxima casa
         int proximo_l = onibus[0];
         int proximo_c = onibus[1];
 
-        // 2. Define o deslocamento com base na direção
+        // Associa a cada número uma direção
         switch(direcao)
         {
             case 1: proximo_l--; break;              // NORTE
@@ -28,10 +28,10 @@ void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passage
             case 8: proximo_l--; proximo_c--; break; // NOROESTE
         }
 
-        // 3. Verifica limites da matriz (bordas)
+        // Verifica as boradas
         if(proximo_l >= 0 && proximo_l < nL && proximo_c >= 0 && proximo_c < nC)
         {
-            // 4. Verifica colisão com obstáculo
+            // Verifica se não é obstáculo
             if(matriz[proximo_l][proximo_c] != '#') 
             {
                 // Se for passageiro, embarca
@@ -41,17 +41,16 @@ void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passage
                     printf("\n\nPassageiros: %d\n\n", *passageiros);
                 }
 
-                // Executa o movimento na matriz
+                // Já que não é nem borda e nem obstáculo, move o ônibus
                 matriz[onibus[0]][onibus[1]] = V; // Limpa a posição antiga
-                matriz[proximo_l][proximo_c] = B; // Desenha o ônibus na nova posição
-                
-                // Atualiza o vetor do ônibus
+                matriz[proximo_l][proximo_c] = B; // Move para nova posição
                 onibus[0] = proximo_l;
                 onibus[1] = proximo_c;
+                
             }
         }
         
-        nCiclos--;
+        contagem++; //Conta ciclo
         imprimeMapa(matriz, nL, nC);
     }
         printf("Passageiros totais: %d\n", *passageiros);        
