@@ -10,7 +10,11 @@
 int main()
 {
    char matriz[MAXL][MAXC];
-   int nL=20,nC=20,nCiclos=50;
+   int nL,nC;
+   printf("\nDigite a quantidade de linhas da matriz:\n");
+   scanf("%d", &nL);
+   printf("\nDigite a quantidade de colunas da matriz:\n");
+   scanf("%d", &nC);
    int opcao;
    int onibus[2], passageiros = 0;
    int ciclos, contagem_ciclos = 0;

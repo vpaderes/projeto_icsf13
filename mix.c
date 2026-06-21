@@ -7,7 +7,6 @@ void mix (char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros
 
     int mov = rand()%3+1; //Define o tipo de movimento
     int rodadas_aleatorias = rand()%30+1;
-    int limite = ciclos;
     int ciclos_temporario;
 
     while ((*contagem_ciclos) < ciclos)
