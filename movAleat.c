@@ -47,7 +47,7 @@ void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passage
                 onibus[1] = proximo_c;
                 
             }
-        }
+        } else continue; //Se não for livre, dora mais um loop para achar a casa livre
         
         (*contagem_ciclos)++; //Conta ciclo
         imprimeMapa(matriz, nL, nC, passageiros, contagem_ciclos);

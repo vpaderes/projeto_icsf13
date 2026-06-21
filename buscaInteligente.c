@@ -33,9 +33,10 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
         }
 
         
-        if (encontrou == 0) { //Se não encontrou passageiros, chama a função move aleatório com 1 ciclo e conta um ciclo a menos
-            //int um = 1; // Cria essa variável só para passar 1 como valor para a função movAleat e mover uma vez
-            movAleat(matriz, nL, nC, onibus, passageiros, 1, contagem_ciclos);
+        if (encontrou == 0) { //Se não encontrou passageiros, chama a função move aleatório com 1 ciclo
+            int contagem_ciclos_temporaria = 0;
+            movAleat(matriz, nL, nC, onibus, passageiros, 1, &contagem_ciclos_temporaria);
+            (*contagem_ciclos)++;
             continue;; // sai desse loop.
         } else {
 
