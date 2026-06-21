@@ -5,13 +5,15 @@
 
 // opcao: 1 = NORTE, 2 = SUL, 3 = LESTE, 4 = OESTE
 // opcao: 5 = NORDESTE, 6 = SUDESTE, 7 = SUDOESTE, 8 = NOROESTE
-void emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, int *passageiros, int*flag_obstaculo, int ciclos, int* contagem_ciclos) {
+void emFrente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos) {
     int l = onibus[0];
     int c = onibus[1];
     int proximo_l = onibus[0];
     int proximo_c = onibus[1];
 
-    *flag_obstaculo = 0;
+    int flag_obstaculo = 0;
+
+    int opcao = defineDirecao(&flag_obstaculo);
 
     while ((*contagem_ciclos)<ciclos) {
 
@@ -43,12 +45,14 @@ void emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, i
 
         // Verifica se é borda
         if (proximo_l < 0 || proximo_l >= nL || proximo_c < 0 || proximo_c >= nC) {
-            *flag_obstaculo = 1;
-            break; 
+            flag_obstaculo = 1;
+            opcao = defineDirecao(&flag_obstaculo); //Se é borda, pede nova direção
+            continue; 
         } // Verifica se é obstáculo
         if (matriz[proximo_l][proximo_c] == '#') {
-            *flag_obstaculo = 1;
-            break; 
+            flag_obstaculo = 1;
+            opcao = defineDirecao(&flag_obstaculo); // Se é obstáculo pede nova direção e pula o resto do programa, incluindo a contagem
+            continue; 
         }
 
         // Se for livre, executa o movimento
