@@ -8,12 +8,12 @@ void preencheMatriz(char matriz[MAXL][MAXC], int nL, int nC, int* onibus);
 int *testeVizinhos(char matriz[MAXL][MAXC], int nL, int nC, int* onibus);
 int escolheMovimento(int *ciclos);
 int defineDirecao();
-void movimentaOnibus(char matriz[MAXL][MAXC], int mov, int nL, int nC, int* onibus, int *passageiros, int *ciclos); 
+void movimentaOnibus(char matriz[MAXL][MAXC], int mov, int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos); 
 void imprimeMapa(char matriz[MAXL][MAXC], int nL, int nC); 
-int emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, int *passageiros, int*flag_obstaculo, int *ciclos);
+void emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, int *passageiros, int*flag_obstaculo, int ciclos, int* contagem_ciclos);
 
 // Adições necessárias para a integração no movimentaOnibus.c
-void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int *ciclos);
-void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int *ciclos);
+void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos);
+void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos);
 
 #endif

@@ -4,10 +4,9 @@
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
 
-void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int *ciclos)
+void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos)
 {
-    int contagem = 0;
-    while(contagem<*ciclos)
+    while((*contagem_ciclos)<ciclos)
     {
         //Sorteia o numero para a direção
         int direcao = rand() % 8 + 1; 
@@ -50,7 +49,7 @@ void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passage
             }
         }
         
-        contagem++; //Conta ciclo
+        (*contagem_ciclos)++; //Conta ciclo
         imprimeMapa(matriz, nL, nC);
     }
         printf("Passageiros totais: %d\n", *passageiros);        

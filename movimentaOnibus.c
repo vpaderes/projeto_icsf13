@@ -2,10 +2,9 @@
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
 
-void movimentaOnibus(char matriz[MAXL][MAXC], int mov, int nL, int nC, int* onibus, int *passageiros, int *ciclos) {
+void movimentaOnibus(char matriz[MAXL][MAXC], int mov, int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos) {
     int flag_obstaculo = 0;
     int opcao = 0;
-    int contagem = 0;
     
     switch (mov) {
         case EMFRENTE:
@@ -22,27 +21,25 @@ void movimentaOnibus(char matriz[MAXL][MAXC], int mov, int nL, int nC, int* onib
             }
 
             // Chamada da função do movimento em frente
-            contagem = emFrente(matriz, opcao, nL, nC, onibus, passageiros, &flag_obstaculo, ciclos);
-            *ciclos-=contagem;
+            emFrente(matriz, opcao, nL, nC, onibus, passageiros, &flag_obstaculo, ciclos, contagem_ciclos);
             
             //A flag de obstáculo serve para prender o onibus nesse loop de movimento caso ele não consiga ir em frente
             while (flag_obstaculo == 1) {
-                *ciclos-=contagem;
                 printf("Encontramos um obstaculo! Digite nova direcao:\n");
                 printf("(1)N  (2)S  (3)L  (4)O\n(5)NE  (6)NO  (7)SE  (8)SO\n\n");
                 scanf("%d", &opcao);
-                contagem = emFrente(matriz, opcao, nL, nC, onibus, passageiros, &flag_obstaculo, ciclos);
+                emFrente(matriz, opcao, nL, nC, onibus, passageiros, &flag_obstaculo, ciclos, contagem_ciclos);
             }
             break;
 
         case ALEAT:
             printf("\nMovimento Aleatorio selecionado.\n"); 
-            movAleat(matriz, nL, nC, onibus, passageiros, ciclos);
+            movAleat(matriz, nL, nC, onibus, passageiros, ciclos, contagem_ciclos);
             break;
 
         case BUSCINTEL:
             printf("\nBusca Inteligente selecionada.\n");
-            buscaInteligente(matriz, nL, nC, onibus, passageiros, ciclos);
+            buscaInteligente(matriz, nL, nC, onibus, passageiros, ciclos, contagem_ciclos);
             break;
 
         case MIX:

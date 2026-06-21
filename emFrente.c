@@ -5,8 +5,7 @@
 
 // opcao: 1 = NORTE, 2 = SUL, 3 = LESTE, 4 = OESTE
 // opcao: 5 = NORDESTE, 6 = SUDESTE, 7 = SUDOESTE, 8 = NOROESTE
-int emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, int *passageiros, int*flag_obstaculo, int *ciclos) {
-    int contagem = 0;
+void emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, int *passageiros, int*flag_obstaculo, int ciclos, int* contagem_ciclos) {
     int l = onibus[0];
     int c = onibus[1];
     int proximo_l = onibus[0];
@@ -14,7 +13,7 @@ int emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, in
 
     *flag_obstaculo = 0;
 
-    while (contagem<*ciclos) {
+    while ((*contagem_ciclos)<ciclos) {
 
         proximo_l = onibus[0];
         proximo_c = onibus[1];
@@ -53,7 +52,7 @@ int emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, in
         }
 
         // Se for livre, executa o movimento
-        contagem++;
+        (*contagem_ciclos)++;
         l = proximo_l;
         c = proximo_c;
 
@@ -72,7 +71,7 @@ int emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, in
     }
 
     printf("\n\nPassageiros totais: %d\n", *passageiros);
-    printf("Ciclos percorridos: %d\n\n", contagem);
+    printf("Ciclos percorridos: %d\n\n", *contagem_ciclos);
 
     
-return contagem;}
+}

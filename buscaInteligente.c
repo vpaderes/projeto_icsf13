@@ -3,15 +3,14 @@
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
 
-void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int *ciclos) {
+void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos) {
     int l_onibus;
     int c_onibus;
     int alvo_l = -1, alvo_c = -1;
     int encontrou = 0;
-    int contagem = 0;
     
 
-    while(contagem <*ciclos) {
+    while((*contagem_ciclos)<ciclos) {
         l_onibus = onibus[0];
         c_onibus = onibus[1];
         encontrou = 0;
@@ -35,14 +34,13 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
 
         
         if (encontrou == 0) { //Se não encontrou passageiros, chama a função move aleatório com 1 ciclo e conta um ciclo a menos
-            int um = 1; // Cria essa variável só para passar 1 como valor para a função movAleat e mover uma vez
-            movAleat(matriz, nL, nC, onibus, passageiros, &um);
-            contagem++;
+            //int um = 1; // Cria essa variável só para passar 1 como valor para a função movAleat e mover uma vez
+            movAleat(matriz, nL, nC, onibus, passageiros, 1, contagem_ciclos);
             continue;; // sai desse loop.
         } else {
 
             // Caso encontrar um passageiro, executa o código abaixo:
-            while ((onibus[0] != alvo_l || onibus[1] != alvo_c) && contagem<*ciclos) {
+            while ((onibus[0] != alvo_l || onibus[1] != alvo_c) && (*contagem_ciclos)<ciclos) {
                 //Cria inicializa para calcular e checar qual é o proximo passo
                 int proximo_l = onibus[0];
                 int proximo_c = onibus[1];
@@ -82,7 +80,7 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
                 //Move o onibus na matriz e limpa casa anterior
                 matriz[l_antigo][c_antigo] = V; 
                 matriz[onibus[0]][onibus[1]] = B; 
-                contagem++;
+                (*contagem_ciclos)++;
                 imprimeMapa(matriz, nL, nC);
             }
             
@@ -92,6 +90,6 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
 
 
     printf("\n\nPassageiros totais: %d\n", *passageiros);
-    printf("Ciclos percorridos: %d\n\n", ciclos);
+    printf("Ciclos percorridos: %d\n\n", *contagem_ciclos);
 }
 
