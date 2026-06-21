@@ -81,15 +81,10 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
                 matriz[l_antigo][c_antigo] = V; 
                 matriz[onibus[0]][onibus[1]] = B; 
                 (*contagem_ciclos)++;
-                imprimeMapa(matriz, nL, nC);
+                imprimeMapa(matriz, nL, nC, passageiros, contagem_ciclos);
             }
             
         }
     }
-    
-
-
-    printf("\n\nPassageiros totais: %d\n", *passageiros);
-    printf("Ciclos percorridos: %d\n\n", *contagem_ciclos);
 }
 

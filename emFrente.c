@@ -67,11 +67,6 @@ void emFrente(char matriz[MAXL][MAXC], int opcao, int nL, int nC, int* onibus, i
         onibus[0] = l; // salva o vetor do onibus em novas posições
         onibus[1] = c;
 
-        imprimeMapa(matriz, nL, nC);
+        imprimeMapa(matriz, nL, nC, passageiros, contagem_ciclos);
     }
-
-    printf("\n\nPassageiros totais: %d\n", *passageiros);
-    printf("Ciclos percorridos: %d\n\n", *contagem_ciclos);
-
-    
 }

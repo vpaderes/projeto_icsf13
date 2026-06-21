@@ -20,7 +20,7 @@ int main()
    int ciclos, contagem_ciclos = 0;
 
    preencheMatriz(matriz, nL, nC, onibus);
-   imprimeMapa(matriz, nL, nC);
+   imprimeMapa(matriz, nL, nC, &passageiros, &contagem_ciclos);
    
    flag_encerramento = 100; // REMOVER APÓS O TESTE
 

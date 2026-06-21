@@ -50,7 +50,6 @@ void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passage
         }
         
         (*contagem_ciclos)++; //Conta ciclo
-        imprimeMapa(matriz, nL, nC);
-    }
-        printf("Passageiros totais: %d\n", *passageiros);        
+        imprimeMapa(matriz, nL, nC, passageiros, contagem_ciclos);
+    }    
 }
