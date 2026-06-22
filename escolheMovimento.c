@@ -19,10 +19,10 @@ int escolheMovimento(int *ciclos){
     }
 
     *ciclos = -1;
-    while ((*ciclos)<0 || (*ciclos)>MAXC*MAXL){
+    while ((*ciclos)<0 || (*ciclos)>MAXCICLOS){
         printf("Digite a quantidade de ciclos:\n");
         scanf("%d", ciclos);
-        if((*ciclos)<0 || (*ciclos)>MAXC*MAXL) printf("Opcao invalida! Digite novamente:\n");
+        if((*ciclos)<=0 || (*ciclos)>MAXCICLOS) printf("Opcao invalida! Deve ser entre 1 e 100. Digite novamente:\n");
     }
 
 

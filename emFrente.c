@@ -5,13 +5,13 @@
 
 // opcao: 1 = NORTE, 2 = SUL, 3 = LESTE, 4 = OESTE
 // opcao: 5 = NORDESTE, 6 = SUDESTE, 7 = SUDOESTE, 8 = NOROESTE
-void emFrente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos) {
+void emFrente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXL][MAXC][MAXCICLOS]) {
     int l = onibus[0];
     int c = onibus[1];
     int proximo_l = onibus[0];
     int proximo_c = onibus[1];
 
-    int flag_obstaculo = 0;
+    int flag_obstaculo = 0, flag_mudamapa = 100;
 
     int opcao = defineDirecao(&flag_obstaculo);
 
@@ -71,6 +71,9 @@ void emFrente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passage
         onibus[0] = l; // salva o vetor do onibus em novas posições
         onibus[1] = c;
 
-        imprimeMapa(matriz, nL, nC, passageiros, contagem_ciclos);
+        flag_mudamapa = rand()&100+1; //3% de chance de aparecerem objetos e passajeiros aleatórios
+        if (flag_mudamapa <= 3) mudaMapa(matriz, nL, nC, onibus);
+
+        imprimeMapa(matriz, nL, nC, passageiros, contagem_ciclos, matriz_memoria);
     }
 }

@@ -26,6 +26,7 @@
 //Tamanhos maximos de linhas e colunas para a matriz
 #define MAXL 100
 #define MAXC 100
+#define MAXCICLOS 100
 
 //Verificacao de sistema operacional para a utilizacao da funcao DORME e LIMPATELA
 #ifdef _WIN32

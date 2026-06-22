@@ -4,8 +4,9 @@
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
 
-void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos)
+void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXL][MAXC][MAXCICLOS])
 {
+    int flag_mudamapa = 100;
     while((*contagem_ciclos)<ciclos)
     {
         //Sorteia o numero para a direção
@@ -47,9 +48,11 @@ void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passage
                 onibus[1] = proximo_c;
                 
             }
-        } else continue; //Se não for livre, dora mais um loop para achar a casa livre
+        } else continue; //Se não for livre, roda mais um loop para achar a casa livre
         
         (*contagem_ciclos)++; //Conta ciclo
-        imprimeMapa(matriz, nL, nC, passageiros, contagem_ciclos);
+        flag_mudamapa = rand()&100+1;//3% de chance de aparecerem objetos e passajeiros aleatórios
+        if (flag_mudamapa <= 3) mudaMapa(matriz, nL, nC, onibus);
+        imprimeMapa(matriz, nL, nC, passageiros, contagem_ciclos, matriz_memoria);
     }    
 }

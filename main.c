@@ -10,6 +10,7 @@
 int main()
 {
    char matriz[MAXL][MAXC];
+   char matriz_memoria[MAXL][MAXC][MAXCICLOS];
    int nL,nC;
    printf("\nDigite a quantidade de linhas da matriz:\n");
    scanf("%d", &nL);
@@ -21,10 +22,30 @@ int main()
    srand(time(NULL));
 
    preencheMatriz(matriz, nL, nC, onibus);
-   imprimeMapa(matriz, nL, nC, &passageiros, &contagem_ciclos);
-   
    opcao = escolheMovimento(&ciclos);
-   movimentaOnibus(matriz, opcao, nL, nC, onibus, &passageiros, ciclos, &contagem_ciclos);
+   imprimeMapa(matriz, nL, nC, &passageiros, &contagem_ciclos, matriz_memoria);
+   movimentaOnibus(matriz, opcao, nL, nC, onibus, &passageiros, ciclos, &contagem_ciclos, matriz_memoria);
+
+   int opcao_de_encerramento, consulta;
+   printf("\nFim do simulador de transporte urbano.\n");
+   printf("\nVocê gostaria de:");
+   printf("\n(1).Sair     (2). Consultar o mapa em um ciclo específico\n");
+   scanf("%d", &opcao_de_encerramento);
+
+   if(opcao_de_encerramento == 2){
+      printf("\nVoce gostaria de consultar qual ciclo?: ");
+      scanf("%d", &consulta);
+      consulta--;
+      LIMPATELA();
+      printf("Mapa no ciclo %d", consulta+1);
+      printf("\n\n\n");
+      for (int i=0; i<nL; i++){
+        for (int j=0; j<nC; j++){
+            printf("%c ", matriz_memoria[i][j][consulta]);
+        }
+        printf("\n");
+      }
+   } else printf("Encerrando o simulador. Obrigado!\n");
 
 
 

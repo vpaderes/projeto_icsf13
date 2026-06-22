@@ -3,11 +3,12 @@
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
 
-void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos) {
+void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXL][MAXC][MAXCICLOS]) {
     int l_onibus;
     int c_onibus;
     int alvo_l = -1, alvo_c = -1;
     int encontrou = 0;
+    int flag_mudamapa = 100;
     
 
     while((*contagem_ciclos)<ciclos) {
@@ -35,7 +36,7 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
         
         if (encontrou == 0) { //Se não encontrou passageiros, chama a função move aleatório com 1 ciclo
             int ciclos_temporario = (*contagem_ciclos)+1; //Passa o valor de ciclos como 1 a mais que a contagem atual, pois só queremos rodar uma vez
-            movAleat(matriz, nL, nC, onibus, passageiros, ciclos_temporario, contagem_ciclos);
+            movAleat(matriz, nL, nC, onibus, passageiros, ciclos_temporario, contagem_ciclos, matriz_memoria);
             continue;; // sai desse loop.
         } else {
 
@@ -81,7 +82,11 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
                 matriz[l_antigo][c_antigo] = V; 
                 matriz[onibus[0]][onibus[1]] = B; 
                 (*contagem_ciclos)++;
-                imprimeMapa(matriz, nL, nC, passageiros, contagem_ciclos);
+
+                flag_mudamapa = rand()&100+1; //3% de chance de aparecerem objetos e passajeiros aleatórios
+                if (flag_mudamapa <= 3) mudaMapa(matriz, nL, nC, onibus);
+
+                imprimeMapa(matriz, nL, nC, passageiros, contagem_ciclos, matriz_memoria);
             }
             
         }

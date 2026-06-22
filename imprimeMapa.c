@@ -3,7 +3,7 @@
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
 
-void imprimeMapa(char matriz[MAXL][MAXC], int nL, int nC, int *passageiros, int *contagem_ciclos) {
+void imprimeMapa(char matriz[MAXL][MAXC], int nL, int nC, int *passageiros, int *contagem_ciclos, char matriz_memoria[MAXL][MAXC][MAXCICLOS]) {
 
     LIMPATELA();
     printf("\n\n\n");
@@ -13,6 +13,14 @@ void imprimeMapa(char matriz[MAXL][MAXC], int nL, int nC, int *passageiros, int 
         }
         printf("\n");
     }
+
+    
+    for (int i=0; i<nL; i++){
+        for (int j=0; j<nC; j++){
+           matriz_memoria[i][j][(*contagem_ciclos)] = matriz[i][j];
+        }
+    }
+    
     printf("\nPassageiros: %d", *passageiros);
     printf("\nCiclos percorridos: %d", *contagem_ciclos);
     printf("\n\n");
