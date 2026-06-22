@@ -51,8 +51,8 @@ void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passage
         } else continue; //Se não for livre, roda mais um loop para achar a casa livre
         
         (*contagem_ciclos)++; //Conta ciclo
-        flag_mudamapa = rand()%100+1;//5% de chance de aparecerem objetos e passajeiros aleatórios
-        if (flag_mudamapa <= 5) mudaMapa(matriz, nL, nC, onibus);
+        flag_mudamapa = rand()&100+1;//3% de chance de aparecerem objetos e passajeiros aleatórios
+        if (flag_mudamapa <= 3) mudaMapa(matriz, nL, nC, onibus);
         imprimeMapa(matriz, nL, nC, passageiros, contagem_ciclos, matriz_memoria);
     }    
 }

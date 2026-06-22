@@ -71,8 +71,8 @@ void emFrente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passage
         onibus[0] = l; // salva o vetor do onibus em novas posições
         onibus[1] = c;
 
-        flag_mudamapa = rand()%100+1; //5% de chance de aparecerem objetos e passajeiros aleatórios
-        if (flag_mudamapa <= 5) mudaMapa(matriz, nL, nC, onibus);
+        flag_mudamapa = rand()&100+1; //3% de chance de aparecerem objetos e passajeiros aleatórios
+        if (flag_mudamapa <= 3) mudaMapa(matriz, nL, nC, onibus);
 
         imprimeMapa(matriz, nL, nC, passageiros, contagem_ciclos, matriz_memoria);
     }
