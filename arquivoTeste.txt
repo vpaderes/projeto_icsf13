@@ -1,0 +1,29 @@
+#include <dirent.h>
+
+void buscaArquivo()
+{
+	DIR *pasta; // Criamos o ponteiro pois a função opendir() aloca a memoria e devolve o endereço
+	struct dirent *arquivo;// Criamos um ponteiro para a função readdir() que aponta para onde os dados do arquivos estão guardados
+	
+
+	pasta = opendir("."); // Abre o diretório atual. Colocar aqui o nome da pasta que vao estar as cidades.
+	
+	if (pasta == NULL)
+	{
+		printf("Erro ao abrir diretorio");
+		return 1;
+	}
+
+	printf("Cidades disponiveis:\n");
+
+	while((arquivo = readdir(pasta)) != NULL) // a função readdir lê os arquivos dentro da pasta. Returna NULL se não há mais arquivos
+	{
+		printf("%s\n", entrada->d_name);// Printa o nome do arquivo.
+	}
+
+	closedir(pasta);
+
+	return 0; 
+}
+
+
