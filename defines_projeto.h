@@ -39,3 +39,11 @@
     #define LIMPATELA() system("clear")
 #endif
 #endif
+
+// Struct para mapas
+typedef struct Mapa
+{
+	char nomeCidade[TAM];
+	int nL, nC, nCiclos;
+	char **matriz;
+}Mapa;
