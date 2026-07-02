@@ -8,22 +8,22 @@ void movimentaOnibus(Mapa *Cidade, int mov, int* onibus, int *passageiros, int* 
     switch (mov) {
         case EMFRENTE:
             printf("\nSeguindo em frente\n");
-            emFrente(Cidade, onibus, passageiros, contagem_ciclos, Cidade->nCiclos);
+            emFrente(Cidade, onibus, passageiros, contagem_ciclos, Cidade->nCiclos-1);
             break;
 
         case ALEAT:
             printf("\nMovimento Aleatorio selecionado.\n"); 
-            movAleat(Cidade, onibus, passageiros, contagem_ciclos, Cidade->nCiclos);
+            movAleat(Cidade, onibus, passageiros, contagem_ciclos, Cidade->nCiclos-1);
             break;
 
         case BUSCINTEL:
             printf("\nBusca Inteligente selecionada.\n");
-            buscaInteligente(Cidade, onibus, passageiros, contagem_ciclos, Cidade->nCiclos);
+            buscaInteligente(Cidade, onibus, passageiros, contagem_ciclos, Cidade->nCiclos-1);
             break;
 
         case MIX:
             printf("\nMovimento Mix selecionado.\n");
-            mix(Cidade, onibus, passageiros, contagem_ciclos, Cidade->nCiclos);
+            mix(Cidade, onibus, passageiros, contagem_ciclos, Cidade->nCiclos-1);
             break;
 
         default:

@@ -84,6 +84,8 @@ void buscaInteligente(Mapa *Cidade, int* onibus, int *passageiros, int* contagem
                 //Move o onibus na matriz e limpa casa anterior
                 Cidade->matriz[*contagem_ciclos][l_antigo][c_antigo] = V; 
                 Cidade->matriz[*contagem_ciclos][onibus[0]][onibus[1]] = B; 
+
+                transitoEmergencial(Cidade, contagem_ciclos);
                 
 
                 flag_mudamapa = rand()%100+1; //5% de chance de aparecerem objetos e passajeiros aleatórios

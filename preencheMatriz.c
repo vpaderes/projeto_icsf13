@@ -45,15 +45,15 @@ void preencheMatriz(Mapa *Cidade, int* onibus)
             sscanf(linha_do_arquivo, "%d,%d", &Cidade->nL, &Cidade->nC); //Lê a quantidade de linhas e colunas
 
             // Aloca espaço para a matriz
-            Cidade->matriz = malloc(Cidade->nCiclos * sizeof(char**));
-            for (int i = 0; i<Cidade->nCiclos; i++){
+            Cidade->matriz = malloc((Cidade->nCiclos+1) * sizeof(char**));
+            for (int i = 0; i<=Cidade->nCiclos; i++){
                 Cidade->matriz[i] = malloc(Cidade->nL * sizeof(char*));
                 for (int j = 0; j<Cidade->nL; j++){
                     Cidade->matriz[i][j] = malloc(Cidade->nC* sizeof(char));
                 }
             }
 
-            for(int i=0;i<Cidade->nCiclos; i++){
+            for(int i=0;i<=Cidade->nCiclos; i++){
                 for(int j=0; j<Cidade->nL;j++){
                     for(int k=0; k<Cidade->nC;k++){
                         Cidade->matriz[i][j][k] = V;

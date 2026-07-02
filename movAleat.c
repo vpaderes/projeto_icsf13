@@ -35,7 +35,7 @@ void movAleat(Mapa *Cidade, int* onibus, int *passageiros, int* contagem_ciclos,
             if(Cidade->matriz[*contagem_ciclos][proximo_l][proximo_c] != '#') 
             {
                 (*contagem_ciclos)++; //Conta ciclo
-                
+
                 // Se for passageiro, embarca
                 if(Cidade->matriz[*contagem_ciclos][proximo_l][proximo_c] == P)
                 {
@@ -51,6 +51,8 @@ void movAleat(Mapa *Cidade, int* onibus, int *passageiros, int* contagem_ciclos,
                 
             }
         } else continue; //Se não for livre, roda mais um loop para achar a casa livre
+
+        transitoEmergencial(Cidade, contagem_ciclos);
         
         
         flag_mudamapa = rand()%100+1;//5% de chance de aparecerem objetos e passajeiros aleatórios

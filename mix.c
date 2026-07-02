@@ -9,7 +9,7 @@ void mix(Mapa *Cidade, int* onibus, int *passageiros, int* contagem_ciclos, int 
     int rodadas_aleatorias = rand()%30+1;
     int ciclos_temporario;
 
-    while ((*contagem_ciclos) < Cidade->nCiclos)
+    while ((*contagem_ciclos) < limite_ciclos)
     {
         mov = rand()%3+1;
         rodadas_aleatorias = rand()%30+1;

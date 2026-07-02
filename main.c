@@ -20,6 +20,13 @@ int main()
    preencheMatriz(&Cidade, onibus);
    opcao = escolheMovimento(&Cidade);
    imprimeMapa(&Cidade, &passageiros, &contagem_ciclos);
+
+   for (int i = 0; i < 30; i++) { //Inicializa os arrays de onibus inimigos
+       Cidade.onibus_inimigo[i][0] = -1;
+       Cidade.onibus_inimigo[i][1] = -1;
+       Cidade.inimigo_ativo[i] = 0;
+   }
+
    movimentaOnibus(&Cidade, opcao, onibus, &passageiros, &contagem_ciclos);
 
    int opcao_de_encerramento, consulta;
@@ -43,7 +50,7 @@ int main()
       }
    } else printf("Encerrando o simulador. Obrigado!\n");
 
-   for (int i = 0; i<Cidade.nCiclos; i++){
+   for (int i = 0; i<=Cidade.nCiclos; i++){
       for (int j = 0; j< Cidade.nL; j++){
          free(Cidade.matriz[i][j]);
       }

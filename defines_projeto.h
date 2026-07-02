@@ -47,4 +47,6 @@ typedef struct Mapa
 	char nomeCidade[TAM];
 	int nCiclos, nL, nC;
 	char ***matriz;
+    int onibus_inimigo[30][2]; // Armazena linha e coluna para até 30 ônibus
+    int inimigo_ativo[30]; // Guarda se estão ativos ou não
 }Mapa;

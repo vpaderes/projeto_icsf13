@@ -15,7 +15,7 @@ void imprimeMapa(Mapa *Cidade, int *passageiros, int *contagem_ciclos) {
         }
         printf("\n");
     }
-    if ((*contagem_ciclos + 1) < Cidade->nCiclos) {
+    if ((*contagem_ciclos + 1) <= Cidade->nCiclos) {
         for (int i = 0; i < Cidade->nL; i++) {
             for (int j = 0; j < Cidade->nC; j++) {
                 Cidade->matriz[*contagem_ciclos + 1][i][j] = Cidade->matriz[*contagem_ciclos][i][j];

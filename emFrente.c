@@ -71,6 +71,8 @@ void emFrente(Mapa *Cidade, int* onibus, int *passageiros, int* contagem_ciclos,
         onibus[0] = l; // salva o vetor do onibus em novas posições
         onibus[1] = c;
 
+        transitoEmergencial(Cidade, contagem_ciclos);
+
         flag_mudamapa = rand()%100+1; //5% de chance de aparecerem objetos e passajeiros aleatórios
         if (flag_mudamapa <= 5) mudaMapa(Cidade, onibus, contagem_ciclos);
         
