@@ -4,10 +4,10 @@
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
 
-void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXCICLOS][MAXL][MAXC])
+void movAleat(Mapa *Cidade, int* onibus, int *passageiros, int* contagem_ciclos, int limite_ciclos)
 {
     int flag_mudamapa = 100;
-    while((*contagem_ciclos)<ciclos)
+    while((*contagem_ciclos)<limite_ciclos)
     {
         //Sorteia o numero para a direção
         int direcao = rand() % 8 + 1; 
@@ -29,30 +29,32 @@ void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passage
         }
 
         // Verifica as boradas
-        if(proximo_l >= 0 && proximo_l < nL && proximo_c >= 0 && proximo_c < nC)
+        if(proximo_l >= 0 && proximo_l < Cidade->nL && proximo_c >= 0 && proximo_c < Cidade->nC)
         {
             // Verifica se não é obstáculo
-            if(matriz[proximo_l][proximo_c] != '#') 
+            if(Cidade->matriz[*contagem_ciclos][proximo_l][proximo_c] != '#') 
             {
+                (*contagem_ciclos)++; //Conta ciclo
+                
                 // Se for passageiro, embarca
-                if(matriz[proximo_l][proximo_c] == P)
+                if(Cidade->matriz[*contagem_ciclos][proximo_l][proximo_c] == P)
                 {
                     (*passageiros)++;
                     printf("\n\nPassageiros: %d\n\n", *passageiros);
                 }
 
                 // Já que não é nem borda e nem obstáculo, move o ônibus
-                matriz[onibus[0]][onibus[1]] = V; // Limpa a posição antiga
-                matriz[proximo_l][proximo_c] = B; // Move para nova posição
+                Cidade->matriz[*contagem_ciclos][onibus[0]][onibus[1]] = V; // Limpa a posição antiga
+                Cidade->matriz[*contagem_ciclos][proximo_l][proximo_c] = B; // Move para nova posição
                 onibus[0] = proximo_l;
                 onibus[1] = proximo_c;
                 
             }
         } else continue; //Se não for livre, roda mais um loop para achar a casa livre
         
-        (*contagem_ciclos)++; //Conta ciclo
+        
         flag_mudamapa = rand()%100+1;//5% de chance de aparecerem objetos e passajeiros aleatórios
-        if (flag_mudamapa <= 5) mudaMapa(matriz, nL, nC, onibus);
-        imprimeMapa(matriz, nL, nC, passageiros, contagem_ciclos, matriz_memoria);
+        if (flag_mudamapa <= 5) mudaMapa(Cidade, onibus, contagem_ciclos);
+        imprimeMapa(Cidade, passageiros, contagem_ciclos);
     }    
 }

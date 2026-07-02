@@ -3,35 +3,35 @@
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
 
-void mix (char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXCICLOS][MAXL][MAXC]){
+void mix(Mapa *Cidade, int* onibus, int *passageiros, int* contagem_ciclos, int limite_ciclos){
 
     int mov = rand()%3+1; //Define o tipo de movimento
     int rodadas_aleatorias = rand()%30+1;
     int ciclos_temporario;
 
-    while ((*contagem_ciclos) < ciclos)
+    while ((*contagem_ciclos) < Cidade->nCiclos)
     {
         mov = rand()%3+1;
         rodadas_aleatorias = rand()%30+1;
 
-        if ((*contagem_ciclos)+rodadas_aleatorias<ciclos){
+        if ((*contagem_ciclos)+rodadas_aleatorias<Cidade->nCiclos){
             ciclos_temporario = rodadas_aleatorias+(*contagem_ciclos);
-        } else ciclos_temporario = ciclos;
+        } else ciclos_temporario = Cidade->nCiclos;
 
         switch (mov) {
             case EMFRENTE:
                 printf("\nSeguir em frente selecionado\n");
-                emFrente(matriz, nL, nC, onibus, passageiros, ciclos_temporario, contagem_ciclos, matriz_memoria);
+                emFrente(Cidade, onibus, passageiros, contagem_ciclos, ciclos_temporario);
                 break;
 
             case ALEAT:
                 printf("\nMovimento Aleatorio selecionado.\n");
-                movAleat(matriz, nL, nC, onibus, passageiros, ciclos_temporario, contagem_ciclos, matriz_memoria);
+                movAleat(Cidade, onibus, passageiros, contagem_ciclos, ciclos_temporario);
                 break;
 
             case BUSCINTEL:
                 printf("\nBusca Inteligente selecionada.\n");
-                buscaInteligente(matriz, nL, nC, onibus, passageiros, ciclos_temporario, contagem_ciclos, matriz_memoria);
+                buscaInteligente(Cidade, onibus, passageiros, contagem_ciclos, ciclos_temporario);
                 break;
 
             default:

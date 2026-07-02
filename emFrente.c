@@ -5,7 +5,7 @@
 
 // opcao: 1 = NORTE, 2 = SUL, 3 = LESTE, 4 = OESTE
 // opcao: 5 = NORDESTE, 6 = SUDESTE, 7 = SUDOESTE, 8 = NOROESTE
-void emFrente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXCICLOS][MAXL][MAXC]) {
+void emFrente(Mapa *Cidade, int* onibus, int *passageiros, int* contagem_ciclos, int limite_ciclos) {
     int l = onibus[0];
     int c = onibus[1];
     int proximo_l = onibus[0];
@@ -15,7 +15,7 @@ void emFrente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passage
 
     int opcao = defineDirecao(&flag_obstaculo);
 
-    while ((*contagem_ciclos)<ciclos) {
+    while ((*contagem_ciclos)< limite_ciclos) {
 
         proximo_l = onibus[0];
         proximo_c = onibus[1];
@@ -44,12 +44,12 @@ void emFrente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passage
         }
 
         // Verifica se é borda
-        if (proximo_l < 0 || proximo_l >= nL || proximo_c < 0 || proximo_c >= nC) {
+        if (proximo_l < 0 || proximo_l >= Cidade->nL || proximo_c < 0 || proximo_c >= Cidade->nC) {
             flag_obstaculo = 1;
             opcao = defineDirecao(&flag_obstaculo); //Se é borda, pede nova direção
             continue; 
         } // Verifica se é obstáculo
-        if (matriz[proximo_l][proximo_c] == '#') {
+        if (Cidade->matriz[*contagem_ciclos][proximo_l][proximo_c] == '#') {
             flag_obstaculo = 1;
             opcao = defineDirecao(&flag_obstaculo); // Se é obstáculo pede nova direção e pula o resto do programa, incluindo a contagem
             continue; 
@@ -60,20 +60,21 @@ void emFrente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passage
         l = proximo_l;
         c = proximo_c;
 
-        if (matriz[l][c] == P) { // Pega passageiro
+        if (Cidade->matriz[*contagem_ciclos][l][c] == P) { // Pega passageiro
             (*passageiros)++;
         }
 
         // Atualizao onibus na planilha
-        matriz[onibus[0]][onibus[1]] = V; 
-        matriz[l][c] = B;                 
+        Cidade->matriz[*contagem_ciclos][onibus[0]][onibus[1]] = V; 
+        Cidade->matriz[*contagem_ciclos][l][c] = B;                 
         
         onibus[0] = l; // salva o vetor do onibus em novas posições
         onibus[1] = c;
 
         flag_mudamapa = rand()%100+1; //5% de chance de aparecerem objetos e passajeiros aleatórios
-        if (flag_mudamapa <= 5) mudaMapa(matriz, nL, nC, onibus);
+        if (flag_mudamapa <= 5) mudaMapa(Cidade, onibus, contagem_ciclos);
+        
 
-        imprimeMapa(matriz, nL, nC, passageiros, contagem_ciclos, matriz_memoria);
+        imprimeMapa(Cidade, passageiros, contagem_ciclos);
     }
 }

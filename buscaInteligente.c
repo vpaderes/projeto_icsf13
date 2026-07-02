@@ -3,7 +3,7 @@
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
 
-void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXCICLOS][MAXL][MAXC]) {
+void buscaInteligente(Mapa *Cidade, int* onibus, int *passageiros, int* contagem_ciclos, int limite_ciclos) {
     int l_onibus;
     int c_onibus;
     int alvo_l = -1, alvo_c = -1;
@@ -11,7 +11,7 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
     int flag_mudamapa = 100;
     
 
-    while((*contagem_ciclos)<ciclos) {
+    while((*contagem_ciclos)<limite_ciclos) {
         l_onibus = onibus[0];
         c_onibus = onibus[1];
         encontrou = 0;
@@ -20,10 +20,10 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
             for (int i = l_onibus - raio; i <= l_onibus + raio && encontrou !=1; i++) { //Testa cada uma das linhas de l_onibus - 3  até l_onibus + 3 
                 for (int j = c_onibus - raio; j <= c_onibus + raio && encontrou !=1; j++) { //Testa cada uma das colunas de c_onibus - 3  até c_onibus + 3 
                     
-                    if (i < 0 || i >= nL || j < 0 || j >= nC) continue; //Não vefifica além das bordas
+                    if (i < 0 || i >= Cidade->nL || j < 0 || j >= Cidade->nC) continue; //Não vefifica além das bordas
 
                     if (abs(i - l_onibus) == raio || abs(j - c_onibus) == raio) {
-                        if (matriz[i][j] == P) {
+                        if (Cidade->matriz[*contagem_ciclos][i][j] == P) {
                             alvo_l = i;
                             alvo_c = j;
                             encontrou = 1; //Muda a flag "encontrou" para a condição de parada.
@@ -34,14 +34,14 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
         }
 
         
-        if (encontrou == 0) { //Se não encontrou passageiros, chama a função move aleatório com 1 ciclo
-            int ciclos_temporario = (*contagem_ciclos)+1; //Passa o valor de ciclos como 1 a mais que a contagem atual, pois só queremos rodar uma vez
-            movAleat(matriz, nL, nC, onibus, passageiros, ciclos_temporario, contagem_ciclos, matriz_memoria);
-            continue;; // sai desse loop.
+        if (encontrou == 0) { 
+            int ciclos_temporario = (*contagem_ciclos) + 1; 
+            movAleat(Cidade, onibus, passageiros, contagem_ciclos, ciclos_temporario);
+            continue; // sai desse loop.
         } else {
 
             // Caso encontrar um passageiro, executa o código abaixo:
-            while ((onibus[0] != alvo_l || onibus[1] != alvo_c) && (*contagem_ciclos)<ciclos) {
+            while ((onibus[0] != alvo_l || onibus[1] != alvo_c) && (*contagem_ciclos)<limite_ciclos) {
                 //Cria inicializa para calcular e checar qual é o proximo passo
                 int proximo_l = onibus[0];
                 int proximo_c = onibus[1];
@@ -53,15 +53,16 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
                 else if (alvo_c > onibus[1]) proximo_c++;//Leste
 
                 // O bloco abaixo verifica se as variáveis de próximo passo não vão bater em um obstáculo ou borda
-                if (proximo_l < 0 || proximo_l >= nL || proximo_c < 0 || proximo_c >= nC || matriz[proximo_l][proximo_c] == '#') {
+                if (proximo_l < 0 || proximo_l >= Cidade->nL || proximo_c < 0 || proximo_c >= Cidade->nC || Cidade->matriz[*contagem_ciclos][proximo_l][proximo_c] == '#') {
                     
                     // Se não for uma casa livre, chama a função de testar vizinhos
-                    int* casa_livre = testeVizinhos(matriz, nL, nC, onibus);
-                    
-                    if (casa_livre[0] != -1 && casa_livre[1] != -1) { //Verifica se há alguma casa livre que a função retornou. Se nçao  houver, ela retorna -1
+                    int* casa_livre = testeVizinhos(Cidade, onibus, contagem_ciclos);
+                    if (casa_livre[0] != -1 && casa_livre[1] != -1) {
                         proximo_l = casa_livre[0];
                         proximo_c = casa_livre[1];
+                        free(casa_livre); 
                     } else {
+                        free(casa_livre);
                         exit(1); 
                     }
                 }
@@ -73,20 +74,22 @@ void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int 
                 onibus[0] = proximo_l;
                 onibus[1] = proximo_c;
 
+                (*contagem_ciclos)++;// Conta o ciclo
+
                 // Pega o passageiro, se for o caso
-                if (matriz[onibus[0]][onibus[1]] == P) { 
+                if (Cidade->matriz[*contagem_ciclos][onibus[0]][onibus[1]] == P) { 
                     (*passageiros)++;
                 }
 
                 //Move o onibus na matriz e limpa casa anterior
-                matriz[l_antigo][c_antigo] = V; 
-                matriz[onibus[0]][onibus[1]] = B; 
-                (*contagem_ciclos)++;
+                Cidade->matriz[*contagem_ciclos][l_antigo][c_antigo] = V; 
+                Cidade->matriz[*contagem_ciclos][onibus[0]][onibus[1]] = B; 
+                
 
                 flag_mudamapa = rand()%100+1; //5% de chance de aparecerem objetos e passajeiros aleatórios
-                if (flag_mudamapa <= 5) mudaMapa(matriz, nL, nC, onibus);
+                if (flag_mudamapa <= 5) mudaMapa(Cidade, onibus, contagem_ciclos);
 
-                imprimeMapa(matriz, nL, nC, passageiros, contagem_ciclos, matriz_memoria);
+                imprimeMapa(Cidade, passageiros, contagem_ciclos);
             }
             
         }

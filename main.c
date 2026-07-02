@@ -20,7 +20,7 @@ int main()
    preencheMatriz(&Cidade, onibus);
    opcao = escolheMovimento(&Cidade);
    imprimeMapa(&Cidade, &passageiros, &contagem_ciclos);
-   movimentaOnibus(matriz, opcao, nL, nC, onibus, &passageiros, ciclos, &contagem_ciclos, matriz_memoria);
+   movimentaOnibus(&Cidade, opcao, onibus, &passageiros, &contagem_ciclos);
 
    int opcao_de_encerramento, consulta;
    printf("\nFim do simulador de transporte urbano.\n");
@@ -35,16 +35,16 @@ int main()
       LIMPATELA();
       printf("Mapa no ciclo %d", consulta+1);
       printf("\n\n\n");
-      for (int i=0; i<nL; i++){
-        for (int j=0; j<nC; j++){
-            printf("%c ", matriz_memoria[i][j][consulta]);
+      for (int i=0; i<Cidade.nL; i++){
+        for (int j=0; j<Cidade.nC; j++){
+            printf("%c ", Cidade.matriz[consulta][i][j]);
         }
         printf("\n");
       }
    } else printf("Encerrando o simulador. Obrigado!\n");
 
-   for (int i = Cidade.nCiclos; i>=0; i--){
-      for (int j = Cidade.nL; j>=0; j--){
+   for (int i = 0; i<Cidade.nCiclos; i++){
+      for (int j = 0; j< Cidade.nL; j++){
          free(Cidade.matriz[i][j]);
       }
       free(Cidade.matriz[i]);

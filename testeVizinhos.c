@@ -3,30 +3,34 @@
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
 
-int *testeVizinhos(char matriz[MAXL][MAXC], int nL, int nC, int* onibus){
+int *testeVizinhos(Mapa *Cidade, int* onibus, int* contagem_ciclos){
 
-    int posicao_livre[2]= {-1,-1}, flag_sai_do_loop =0;
-    int* posicao = &posicao_livre[0];
+    int *posicao = malloc(2 * sizeof(int));
+    posicao[0] = -1;
+    posicao[1] = -1;
+    int flag_sai_do_loop = 0;
 
-    for (int l = onibus[0]-1; l<onibus[0]+2 && l<nL; l++){
+    for (int l = onibus[0]-1; l<onibus[0]+2 && l<Cidade->nL; l++){
         if (l<0) l=0;
-        for (int c = onibus[1]-1; c<onibus[1]+2 && c<nC; c++){
+        for (int c = onibus[1]-1; c<onibus[1]+2 && c<Cidade->nC; c++){
             if (c<0) c=0;
             if (l==onibus[0] && c==onibus[1]) {
                 c++;
             }
-            if (matriz[l][c] != '#'){
-                posicao_livre[0]=l;
-                posicao_livre[1]=c;
-                flag_sai_do_loop =1;
+            if (Cidade->matriz[*contagem_ciclos][l][c] != '#'){
+                posicao[0]=l;
+                posicao[1]=c;
+                flag_sai_do_loop = 1;
                 break;
             }
         }
-        if(flag_sai_do_loop=1){
+        // Correção do Ponto 2: Uso de '==' em vez de '='
+        if(flag_sai_do_loop == 1){
             break;
         }
     }
-    if (posicao_livre[0] == -1 && posicao_livre[1] == -1) {
+    
+    if (posicao[0] == -1 && posicao[1] == -1) {
         printf("\n\nOnibus preso! Chame o guincho!\n\n");
         printf(
         "     _               \n"
@@ -41,5 +45,5 @@ int *testeVizinhos(char matriz[MAXL][MAXC], int nL, int nC, int* onibus){
     exit(1);
     }
 
-return posicao;
+    return posicao;
 }

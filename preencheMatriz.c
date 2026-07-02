@@ -23,16 +23,18 @@ void preencheMatriz(Mapa *Cidade, int* onibus)
         printf("\n Erro na escolha do mapa. Encerrando o programa.\n"); // Se não deu certo encerra o programa
         exit(1);
     }
+    char caminhoCompleto[512];
+    snprintf(caminhoCompleto, sizeof(caminhoCompleto), "./Mapas/%s", nomeDoMapa);
 
     //Colocar chamada da função de ler o arquivo do mapa e salvar na nossa matriz
 
-    FILE *mapa_csv = fopen(nomeDoMapa, "r");
+    FILE *mapa_csv = fopen(caminhoCompleto, "r");
     if (mapa_csv == NULL) { // Tratamento de erros
         printf("\nErro ao abrir o mapa");
         exit(1);
     }
 
-    char linha_do_arquivo[256]; // Char par aler as strings do mapa
+    char linha_do_arquivo[10]; // Char par aler as strings do mapa
     int contagem_de_linhas = 0;
     int linha_csv, coluna_csv;
     char item_csv;
@@ -40,21 +42,31 @@ void preencheMatriz(Mapa *Cidade, int* onibus)
     while (fgets(linha_do_arquivo, sizeof(linha_do_arquivo), mapa_csv) != NULL) {
 
         if(contagem_de_linhas == 0){
-            sscanf(linha_do_arquivo, "%[^,], %d, %d", &Cidade->nL, &Cidade->nC); //Lê a quantidade de linhas e colunas
+            sscanf(linha_do_arquivo, "%d,%d", &Cidade->nL, &Cidade->nC); //Lê a quantidade de linhas e colunas
 
             // Aloca espaço para a matriz
             Cidade->matriz = malloc(Cidade->nCiclos * sizeof(char**));
             for (int i = 0; i<Cidade->nCiclos; i++){
                 Cidade->matriz[i] = malloc(Cidade->nL * sizeof(char*));
                 for (int j = 0; j<Cidade->nL; j++){
-                    Cidade->matriz[i][j] = malloc(Cidade->nC * sizeof(char));
+                    Cidade->matriz[i][j] = malloc(Cidade->nC* sizeof(char));
+                }
+            }
+
+            for(int i=0;i<Cidade->nCiclos; i++){
+                for(int j=0; j<Cidade->nL;j++){
+                    for(int k=0; k<Cidade->nC;k++){
+                        Cidade->matriz[i][j][k] = V;
+                    }
                 }
             }
 
 
         } else {
-            sscanf(linha_do_arquivo, "%[^,], %d, %d, %c", &linha_csv, &coluna_csv, &item_csv); //Lê as strings do arquivo até a virgula e salva em cada uma das variáveis 
+            
+            if (sscanf(linha_do_arquivo, "%d,%d,%c", &linha_csv, &coluna_csv, &item_csv) == 3) {
             Cidade->matriz[0][linha_csv][coluna_csv] = item_csv;
+            }
         }
         contagem_de_linhas++;
     }
