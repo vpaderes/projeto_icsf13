@@ -6,7 +6,7 @@ void buscaArquivo()
 	struct dirent *arquivo;// Criamos um ponteiro para a função readdir() que aponta para onde os dados do arquivos estão guardados
 	
 
-	pasta = opendir("."); // Abre o diretório atual. Colocar aqui o nome da pasta que vao estar as cidades.
+	pasta = opendir("./Mapas"); // Abre o diretório atual. Colocar aqui o nome da pasta que vao estar as cidades.
 	
 	if (pasta == NULL)
 	{

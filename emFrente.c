@@ -5,7 +5,7 @@
 
 // opcao: 1 = NORTE, 2 = SUL, 3 = LESTE, 4 = OESTE
 // opcao: 5 = NORDESTE, 6 = SUDESTE, 7 = SUDOESTE, 8 = NOROESTE
-void emFrente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXL][MAXC][MAXCICLOS]) {
+void emFrente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXCICLOS][MAXL][MAXC]) {
     int l = onibus[0];
     int c = onibus[1];
     int proximo_l = onibus[0];

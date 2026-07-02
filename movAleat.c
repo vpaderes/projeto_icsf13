@@ -4,7 +4,7 @@
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
 
-void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXL][MAXC][MAXCICLOS])
+void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXCICLOS][MAXL][MAXC])
 {
     int flag_mudamapa = 100;
     while((*contagem_ciclos)<ciclos)

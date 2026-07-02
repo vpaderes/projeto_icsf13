@@ -41,9 +41,10 @@
 #endif
 
 // Struct para mapas
+#define TAM 256
 typedef struct Mapa
 {
 	char nomeCidade[TAM];
-	int nL, nC, nCiclos;
-	char **matriz;
+	int nCiclos, nL, nC;
+	char ***matriz;
 }Mapa;

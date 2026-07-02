@@ -2,7 +2,7 @@
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
 
-void movimentaOnibus(char matriz[MAXL][MAXC], int mov, int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXL][MAXC][MAXCICLOS]) {
+void movimentaOnibus(char matriz[MAXL][MAXC], int mov, int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXCICLOS][MAXL][MAXC]) {
     int flag_obstaculo = 0;
     
     switch (mov) {

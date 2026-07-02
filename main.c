@@ -3,27 +3,23 @@
 #include <time.h>
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
-// #include <windows.h>
+//#include <windows.h>
 
 
 
 int main()
 {
-   char matriz[MAXL][MAXC];
-   char matriz_memoria[MAXL][MAXC][MAXCICLOS];
-   int nL,nC;
-   printf("\nDigite a quantidade de linhas da matriz:\n");
-   scanf("%d", &nL);
-   printf("\nDigite a quantidade de colunas da matriz:\n");
-   scanf("%d", &nC);
+
+   Mapa Cidade;
+   
    int opcao;
    int onibus[2], passageiros = 0;
-   int ciclos, contagem_ciclos = 0;
+   int contagem_ciclos = 0;
    srand(time(NULL));
 
-   preencheMatriz(matriz, nL, nC, onibus);
-   opcao = escolheMovimento(&ciclos);
-   imprimeMapa(matriz, nL, nC, &passageiros, &contagem_ciclos, matriz_memoria);
+   preencheMatriz(&Cidade, onibus);
+   opcao = escolheMovimento(&Cidade);
+   imprimeMapa(&Cidade, &passageiros, &contagem_ciclos);
    movimentaOnibus(matriz, opcao, nL, nC, onibus, &passageiros, ciclos, &contagem_ciclos, matriz_memoria);
 
    int opcao_de_encerramento, consulta;
@@ -46,6 +42,14 @@ int main()
         printf("\n");
       }
    } else printf("Encerrando o simulador. Obrigado!\n");
+
+   for (int i = Cidade.nCiclos; i>=0; i--){
+      for (int j = Cidade.nL; j>=0; j--){
+         free(Cidade.matriz[i][j]);
+      }
+      free(Cidade.matriz[i]);
+   }
+   free(Cidade.matriz);
 
 
 

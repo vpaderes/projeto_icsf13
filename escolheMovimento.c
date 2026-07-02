@@ -3,7 +3,7 @@
 #include "prototipos_projeto.h"
 
 
-int escolheMovimento(int *ciclos){
+int escolheMovimento(Mapa *Cidade){
     int opcao = 0;
 
     while (opcao<1 || opcao>4){
@@ -16,13 +16,6 @@ int escolheMovimento(int *ciclos){
         scanf("%d", &opcao);
         
         if(opcao<1 || opcao>4) printf("Opcao invalida! Digite novamente:\n");
-    }
-
-    *ciclos = -1;
-    while ((*ciclos)<0 || (*ciclos)>MAXCICLOS){
-        printf("Digite a quantidade de ciclos:\n");
-        scanf("%d", ciclos);
-        if((*ciclos)<=0 || (*ciclos)>MAXCICLOS) printf("Opcao invalida! Deve ser entre 1 e 100. Digite novamente:\n");
     }
 
 

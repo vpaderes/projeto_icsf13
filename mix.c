@@ -3,7 +3,7 @@
 #include "defines_projeto.h"
 #include "prototipos_projeto.h"
 
-void mix (char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXL][MAXC][MAXCICLOS]){
+void mix (char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXCICLOS][MAXL][MAXC]){
 
     int mov = rand()%3+1; //Define o tipo de movimento
     int rodadas_aleatorias = rand()%30+1;
