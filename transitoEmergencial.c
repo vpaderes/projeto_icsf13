@@ -4,12 +4,12 @@
 #include "prototipos_projeto.h"
 
 void transitoEmergencial(Mapa *Cidade, int* contagem_ciclos) {
-    // 1. Surgimento aleatório (5% de chance de ocorrer uma "onda" de inimigos)
+    // Surgimento aleatório 5% de chance de ocorrer
     if ((rand() % 100 + 1) <= 5) {
         int qtd_novos = (rand() % 30) + 1; // Sorteia entre 1 e 30 ônibus
 
         for (int k = 0; k < qtd_novos; k++) {
-            // Procura um espaço livre na memória (array) para registrar o novo ônibus
+            // Procura um espaço livre no vetor para registrar o novo ônibus
             int slot_livre = -1;
             for (int i = 0; i < 30; i++) {
                 if (Cidade->inimigo_ativo[i] == 0) {
@@ -19,8 +19,8 @@ void transitoEmergencial(Mapa *Cidade, int* contagem_ciclos) {
             }
 
             // Se achou espaço na memória, tenta colocar no mapa
-            if (slot_livre != -1) {
-                // Limite de 50 tentativas para não dar LOOP INFINITO se o mapa estiver cheio
+            if (slot_livre != -1) { // Se o espaço no array está ocupado por um onibus
+                // Limite de 50 tentativas
                 for (int tentativas = 0; tentativas < 50; tentativas++) {
                     int aleatL = rand() % Cidade->nL;
                     int aleatC = rand() % Cidade->nC;
@@ -32,18 +32,18 @@ void transitoEmergencial(Mapa *Cidade, int* contagem_ciclos) {
                         Cidade->inimigo_ativo[slot_livre] = 1;
                         break; // Deu certo, sai do loop de tentativas e vai pro próximo ônibus
                     } 
-                    else if (Cidade->matriz[*contagem_ciclos][aleatL][aleatC] == B) {
-                        printf("\nNovo bloqueio detectado na cidade (colisao no spawn).\n");
+                    else if (Cidade->matriz[*contagem_ciclos][aleatL][aleatC] == B) { //Verifica se já  é um onibus no local
+                        printf("\nNovo bloqueio detectado na cidade.\n");
                         Cidade->matriz[*contagem_ciclos][aleatL][aleatC] = '#';
-                        break; // Colidiu no spawn, desiste desse ônibus e ele vira bloqueio
+                        break; // Desiste desse ônibus e ele vira bloqueio -  N~ao coloca nada nos indidces
                     }
                 }
             }
         }
     }
 
-    // 2. Movimentação dos ônibus secundários ativos
-    // Vê todos os 30 slots e movimenta apenas os ativos
+    // Movimentação dos ônibus secundários ativos
+    // Vê todos os 30 espaços e movimenta apenas os ativos
     for (int i = 0; i < 30; i++) {
         if (Cidade->inimigo_ativo[i] == 1) {
             int direcao = rand() % 8 + 1;
@@ -71,7 +71,7 @@ void transitoEmergencial(Mapa *Cidade, int* contagem_ciclos) {
                         printf("\nNovo bloqueio detectado na cidade.\n");
                         Cidade->matriz[*contagem_ciclos][proximo_l][proximo_c] = '#';
                         Cidade->matriz[*contagem_ciclos][Cidade->onibus_inimigo[i][0]][Cidade->onibus_inimigo[i][1]] = V;
-                        Cidade->inimigo_ativo[i] = 0; // Inativa este ônibus
+                        Cidade->inimigo_ativo[i] = 0; // Inativa o ônibus
                         Cidade->onibus_inimigo[i][0] = -1;
                     } else if (destino == V) { 
                         // Movimento bem-sucedido para casa livre

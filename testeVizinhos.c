@@ -10,12 +10,12 @@ int *testeVizinhos(Mapa *Cidade, int* onibus, int* contagem_ciclos){
     posicao[1] = -1;
     int flag_sai_do_loop = 0;
 
-    for (int l = onibus[0]-1; l<onibus[0]+2 && l<Cidade->nL; l++){
+    for (int l = onibus[0]-1; l<onibus[0]+2 && l<Cidade->nL; l++){ // Anda de linha -1 a linha +1 e verifica borda
         if (l<0) l=0;
-        for (int c = onibus[1]-1; c<onibus[1]+2 && c<Cidade->nC; c++){
+        for (int c = onibus[1]-1; c<onibus[1]+2 && c<Cidade->nC; c++){ // Anda de Coluna -1 a Coluna +1 e verifica borda
             if (c<0) c=0;
             if (l==onibus[0] && c==onibus[1]) {
-                c++;
+                continue;
             }
             if (Cidade->matriz[*contagem_ciclos][l][c] != '#'){
                 posicao[0]=l;
@@ -24,7 +24,7 @@ int *testeVizinhos(Mapa *Cidade, int* onibus, int* contagem_ciclos){
                 break;
             }
         }
-        // Correção do Ponto 2: Uso de '==' em vez de '='
+        
         if(flag_sai_do_loop == 1){
             break;
         }
