@@ -16,7 +16,7 @@ void mudaMapa(Mapa *Cidade, int* onibus, int* contagem_ciclos);
 void escolheArquivoMapa(char *arquivoEscolhido);
 int criaOnibus(Mapa *Cidade);
 void escolheArquivoMapa(char *arquivoEscolhido);
-
+void movNovosAleat(Mapa *Cidade, int onibus, int *antigo_onibus, int* passageiros, int* contagem_ciclos)
 
 #endif
 

@@ -19,8 +19,7 @@ void movimentoNovosOnibus(Mapa *Cidade, int *onibus, int* passageiros, int* cont
                 segundo_onibus[1] = j;
 
                 contagem_temporaria = Cidade->nCiclos - 1;
-                movAleat(&Cidade, segundo_onibus, passageiros, contagem_temporaria);
-
+                movAleatNovosOnibus(&Cidade, segundo_onibus, onibus, passageiros, contagem_temporaria);
             }
 	}	}
 }
