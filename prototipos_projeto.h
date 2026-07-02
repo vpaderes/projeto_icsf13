@@ -13,5 +13,5 @@ void movAleat(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passage
 void buscaInteligente(char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXL][MAXC][MAXCICLOS]);
 void mix (char matriz[MAXL][MAXC], int nL, int nC, int* onibus, int *passageiros, int ciclos, int* contagem_ciclos, char matriz_memoria[MAXL][MAXC][MAXCICLOS]);
 void mudaMapa(char matriz[MAXL][MAXC], int nL, int nC, int* onibus);
-
+int criaOnibus(Mapa *Cidade);
 #endif
